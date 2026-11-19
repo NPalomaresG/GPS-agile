@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071b2b">
+  <meta name="description" content="CARA B es una plataforma para descubrir música, compartirla con amigos, encontrar conciertos y explorar equipo de segunda mano.">
+  <title>CARA B · De tu próximo tema a tu próximo ampli</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="cabecera" id="inicio">
+    <div class="cabecera-interior">
+      <a class="marca" href="#inicio"><span class="disco" aria-hidden="true"></span>CARA B</a>
+      <nav class="navegacion" aria-label="Capítulos">
+        <a href="#descubrir">Descubrir</a>
+        <a href="#en-comun">En común</a>
+        <a href="#en-directo">En directo</a>
+        <a href="#equipo">Equipo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="portada" aria-labelledby="titular">
+      <img class="foto-portada" src="recursos/portada.webp" width="1536" height="1024"
+        alt="Una guitarrista canta ante el micrófono en una sala pequeña iluminada en violeta" fetchpriority="high">
+      <div class="portada-interior">
+        <p class="ceja"><span aria-hidden="true"></span> Prototipo de plataforma musical</p>
+        <h1 id="titular">De tu próximo<br>tema a tu <br class="corte-movil">próximo <br class="corte-escritorio">ampli<span aria-hidden="true">.</span></h1>
+        <p class="entradilla">Descubre canciones y artistas, mezcla tus gustos con amigos, encuentra conciertos y explora equipo musical de segunda mano.</p>
+        <a class="boton boton-principal" href="#descubrir">Explorar el recorrido</a>
+      </div>
+    </section>
+
+    <div class="recorrido">
+      <div class="marco" role="region" aria-label="Recorrido de CARA B" tabindex="0">
+        <div class="pista">
+          <section class="capitulo descubrir" id="descubrir" aria-labelledby="titulo-descubrir">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> Descubrir</p>
+                <h2 id="titulo-descubrir">Escucha un poco.<br>Encuentra algo nuevo.</h2>
+                <p>Prueba canciones en unos segundos. Guarda las que te enganchen y sigue escuchando mientras la lista sube de intensidad.</p>
+              </div>
+              <div class="escucha">
+                <div class="ambientes">
+                  <span class="etiqueta-demo">Demo</span>
+                  <ol class="secuencia" aria-label="Evolución de la lista por ambiente">
+                    <li aria-current="step">Calma</li>
+                    <li><span aria-hidden="true">→</span> Impulso</li>
+                    <li><span aria-hidden="true">→</span> Energía</li>
+                  </ol>
+                </div>
+                <div class="mazo">
+                  <div class="siguiente-portada" aria-hidden="true">
+                    <img src="recursos/impulso.webp" width="640" height="640" alt="">
+                  </div>
+                  <article class="cancion" aria-labelledby="cancion-titulo">
+                    <img class="cancion-portada" src="recursos/calma.webp" width="640" height="640" alt=""
+                      draggable="false">
+                    <div class="cancion-ficha">
+                      <span class="cancion-numero" aria-label="Canción 1 de 3">01 / 03</span>
+                      <div>
+                        <h3 id="cancion-titulo">Persianas</h3>
+                        <p class="cancion-artista">Marea Baja</p>
+                      </div>
+                      <div class="reproductor">
+                        <button class="reproducir" type="button" aria-label="Reproducir Persianas">
+                          <span aria-hidden="true"></span>
+                        </button>
+                        <div class="fragmento">
+                          <progress max="16" value="0" aria-label="Avance del fragmento"></progress>
+                          <span class="tiempo" aria-hidden="true">0:00 / 0:16</span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+                <div class="acciones-cancion">
+                  <button class="boton guardar" type="button" aria-pressed="false">Guardar</button>
+                  <button class="boton siguiente-cancion" type="button">Siguiente</button>
+                  <span class="aviso-cancion" role="status"></span>
+                </div>
+                <p class="gestos">Desliza la portada ← para pasar o → para guardar.</p>
+                <audio src="recursos/persianas.mp3" preload="none"></audio>
+              </div>
+            </div>
+          </section>
+
+          <section class="capitulo en-comun" id="en-comun" aria-labelledby="titulo-en-comun">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> En común</p>
+                <h2 id="titulo-en-comun">Dos gustos,<br>una lista.</h2>
+                <p>Mezcla tus canciones con las de un amigo. Cada tema conserva la marca de quien lo puso en la lista.</p>
+              </div>
+              <figure class="mezcla">
+                <div class="mezcla-portada">
+                  <img src="recursos/en-comun.webp" width="1050" height="700"
+                    alt="Dos amigos comparten auriculares en un local de ensayo">
+                  <div class="mezcla-nombres"><span>Noa</span><span class="mas">+</span><span>Dani</span></div>
+                </div>
+                <figcaption class="mezcla-lista">
+                  <div class="mezcla-cabecera">
+                    <h3>La mezcla</h3>
+                    <span class="etiqueta-demo">Demo</span>
+                  </div>
+                  <ol>
+                    <li><span><strong>Persianas</strong><small>Marea Baja</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong>Cable a tierra</strong><small>Voltaje Sur</small></span><span class="origen dani">Dani</span></li>
+                    <li><span><strong>Frecuencia gris</strong><small>Las Horas Rojas</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong>Órbita corta</strong><small>Patio Polar</small></span><span class="origen dani">Dani</span></li>
+                  </ol>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="capitulo en-directo" id="en-directo" aria-labelledby="titulo-en-directo">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> En directo</p>
+                <h2 id="titulo-en-directo">De la playlist<br>a la sala.</h2>
+                <p>Si descubriste a Las Horas Rojas, mira cuándo puedes verlas en directo. Tus escuchas también pueden llevarte a un festival.</p>
+              </div>
+              <img class="foto-concierto" src="recursos/en-directo.webp" width="1080" height="720"
+                alt="Público con las manos en alto frente a un escenario pequeño iluminado en ámbar">
+              <div class="agenda">
+                <div class="agenda-cabecera">
+                  <h3>Agenda recomendada</h3>
+                  <span class="etiqueta-demo">Demo</span>
+                </div>
+                <ul>
+                  <li>
+                    <time datetime="2027-04-16"><strong>16</strong> abr</time>
+                    <div><strong>Las Horas Rojas</strong><span>Sala Umbral · Madrid</span></div>
+                    <span class="origen-evento">De tu escucha</span>
+                  </li>
+                  <li>
+                    <time datetime="2027-04-24"><strong>24</strong> abr</time>
+                    <div><strong>Marea Baja</strong><span>Club El Dique · Valencia</span></div>
+                  </li>
+                  <li>
+                    <time datetime="2027-05-08"><strong>08</strong> may</time>
+                    <div><strong>Patio Polar</strong><span>Festival Ruido Interior · Bilbao</span></div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="capitulo equipo" id="equipo" aria-labelledby="titulo-equipo">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> Equipo</p>
+                <h2 id="titulo-equipo">Conoce el modelo.<br>Encuentra tu unidad.</h2>
+              </div>
+              <article class="archivo" aria-labelledby="modelo">
+                <img src="recursos/amplificador.webp" width="900" height="600"
+                  alt="Amplificador Bruma 15, con rejilla de tela cruda y cuatro mandos de color marfil">
+                <div class="archivo-ficha">
+                  <div class="archivo-cabecera">
+                    <span>Archivo de equipo</span><span class="etiqueta-demo">Demo</span>
+                  </div>
+                  <h3 id="modelo">Bruma 15</h3>
+                  <dl><div><dt>Año</dt><dd>1978</dd></div><div><dt>Potencia</dt><dd>15 W</dd></div></dl>
+                  <p>Nació como ampli de ensayo. Su tamaño acabó haciéndolo habitual en salas pequeñas.</p>
+                  <details>
+                    <summary>Manual del Bruma 15</summary>
+                    <p>Ficha de ejemplo, p. 4. Conecta la guitarra y empieza con el volumen al mínimo. Ajusta graves y agudos al gusto y sube el volumen poco a poco.</p>
+                  </details>
+                  <p class="cobertura">El archivo también reúne instrumentos y pedales.</p>
+                </div>
+              </article>
+              <div class="mercado">
+                <div class="mercado-cabecera">
+                  <h3>Segunda mano y merchandising</h3>
+                  <span class="etiqueta-demo">Demo</span>
+                </div>
+                <div class="anuncios">
+                  <article class="anuncio">
+                    <img src="recursos/unidad-local.webp" width="420" height="280" alt="Un Bruma 15 en el suelo de un local de ensayo">
+                    <div>
+                      <h4>Bruma 15</h4>
+                      <span class="precio">185 €</span>
+                      <p>Muy buen estado<br>Entrega en mano · Madrid</p>
+                    </div>
+                  </article>
+                  <article class="anuncio">
+                    <img src="recursos/unidad-envio.webp" width="420" height="280" alt="Otro Bruma 15 sobre una alfombra roja">
+                    <div>
+                      <h4>Bruma 15</h4>
+                      <span class="precio">150 €</span>
+                      <p>Marcas de uso<br>Envío disponible</p>
+                    </div>
+                  </article>
+                  <article class="anuncio anuncio-merch">
+                    <img src="recursos/camiseta.webp" width="320" height="320" alt="Camiseta negra estampada con un disco de color crema">
+                    <div>
+                      <h4>Camiseta CARA B</h4>
+                      <span class="precio">19 €</span>
+                      <p>Tallas S–XL</p>
+                    </div>
+                  </article>
+                </div>
+                <p class="vender"><strong>Para vender</strong> Elige el modelo <span aria-hidden="true">→</span> Añade fotos y estado <span aria-hidden="true">→</span> Fija el precio</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="mandos" hidden>
+          <progress class="progreso-recorrido" max="4" value="1" aria-label="Progreso del recorrido"></progress>
+          <div class="mandos-interior">
+            <div class="escena" role="status" aria-atomic="true"><span class="escena-numero">01 / 04</span><span class="escena-nombre">Descubrir</span></div>
+            <div class="mandos-botones">
+              <button class="boton anterior-capitulo" type="button" aria-label="Anterior capítulo" aria-disabled="true">Anterior</button>
+              <button class="boton siguiente-capitulo" type="button" aria-label="Siguiente capítulo">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="cierre">
+    <div class="cierre-interior">
+      <div class="marca"><span class="disco" aria-hidden="true"></span>CARA B</div>
+      <a class="volver" href="#inicio">Volver al inicio</a>
+      <p>Proyecto académico de Agile · Datos de demostración</p>
+    </div>
+  </footer>
+</body>
+</html>
