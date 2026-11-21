@@ -127,6 +127,7 @@ siguiente.addEventListener('click', () => irAlCapitulo(activo + 1));
 
 marco.addEventListener('keydown', evento => {
   if (evento.altKey || evento.ctrlKey || evento.metaKey || evento.shiftKey) return;
+  if (evento.target.closest('select')) return;
   const avance = { ArrowLeft: -1, ArrowRight: 1 }[evento.key];
   if (!avance) return;
   evento.preventDefault();
@@ -139,6 +140,7 @@ window.addEventListener('resize', medirRecorrido);
 reducirMovimiento.addEventListener('change', medirRecorrido);
 window.addEventListener('hashchange', seguirAncla);
 
+progreso.max = capitulos.length;
 mandos.hidden = false;
 medirRecorrido();
 if (capituloDelEnlace(location.hash) >= 0) {
@@ -149,6 +151,24 @@ const observarAltura = new ResizeObserver(() => {
   if (modo === 'tactil') programarActualizacion();
 });
 capitulos.forEach(capitulo => observarAltura.observe(capitulo));
+
+const temasAnimo = [
+  {
+    animo: 'calma', titulo: 'Sailor Song', artista: 'Gigi Perez',
+    spotify: '2262bWmqomIaJXwCRHr13j', descripcion: 'Indie folk · Guitarra acústica y voz íntima.',
+    imagen: 'https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e6065f209e0a01986206bd53',
+  },
+  {
+    animo: 'impulso', titulo: 'Midnight City', artista: 'M83',
+    spotify: '1eyzqe2QqGZUmfcPZtrIyt', descripcion: 'Electrónica · Sintetizadores y ritmos envolventes.',
+    imagen: 'https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0290e9adff5f77dd1ff6d24e47',
+  },
+  {
+    animo: 'energia', titulo: 'Dog Days Are Over', artista: 'Florence + The Machine',
+    spotify: '1YLJVmuzeM2YSUkCCaTNUB', descripcion: 'Indie rock · Percusión expansiva y voz potente.',
+    imagen: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020672b0f8756ae2af86e8a5ce',
+  },
+];
 
 const canciones = [
   {
@@ -175,78 +195,243 @@ const canciones = [
     spotify: '0eAuGrXyGFYwur9ARUe7LJ',
     imagen: 'https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022c1f34ecc1929fb59908aad1',
   },
+  ...temasAnimo,
 ];
-const escucha = document.querySelector('.escucha');
-const tarjeta = escucha.querySelector('.cancion');
-const reproductor = escucha.querySelector('.reproductor');
-const enlaceCancion = escucha.querySelector('.cancion-enlace');
-const guardar = escucha.querySelector('.guardar');
-const aviso = escucha.querySelector('.aviso-cancion');
-const portada = escucha.querySelector('.cancion-portada');
-const titulo = escucha.querySelector('#cancion-titulo');
-const artista = escucha.querySelector('.cancion-artista');
-const contador = escucha.querySelector('.cancion-numero');
-const guardadas = new Set();
-let cancion = 0;
-let gesto;
+const artistas = temasAnimo.map(tema => ({
+  id: tema.spotify, imagen: tema.imagen, titulo: tema.artista, subtitulo: tema.descripcion, tema,
+}));
+const urlSpotify = tema => `https://open.spotify.com/track/${tema.spotify}`;
+const embedSpotify = tema => `https://open.spotify.com/embed/track/${tema.spotify}`;
+const uriSpotify = tema => `spotify:track:${tema.spotify}`;
 
-function actualizarGuardado() {
-  const guardada = guardadas.has(cancion);
-  guardar.setAttribute('aria-pressed', String(guardada));
-  guardar.textContent = guardada ? 'Guardada' : 'Guardar';
-}
+function prepararMazo(escucha, tarjetas, tipo, clave, etiquetas, actualizarEnlace) {
+  const tarjeta = escucha.querySelector('.tarjeta-deslizante');
+  const portada = tarjeta.querySelector('.tarjeta-portada');
+  const titulo = tarjeta.querySelector('h3');
+  const subtitulo = tarjeta.querySelector('.tarjeta-subtitulo');
+  const contador = tarjeta.querySelector('.tarjeta-numero');
+  const enlace = tarjeta.querySelector('.tarjeta-enlace');
+  const guardar = escucha.querySelector('.guardar');
+  const aviso = escucha.querySelector('.aviso-mazo');
+  const coleccion = escucha.querySelector('.guardados');
+  const lista = coleccion.querySelector('ul');
+  const resumen = coleccion.querySelector('summary');
+  const nombreColeccion = resumen.textContent;
+  const [accion, marcada, confirmada, retirada] = etiquetas;
+  let guardadas = new Set();
+  let actual = 0;
+  let gesto;
 
-function marcarCancion(guardada = true) {
-  if (guardada) guardadas.add(cancion);
-  else guardadas.delete(cancion);
-  actualizarGuardado();
-  aviso.textContent = `«${canciones[cancion].titulo}» ${guardada ? 'guardada' : 'quitada de guardadas'}.`;
-}
-
-function pasarCancion() {
-  cancion = (cancion + 1) % canciones.length;
-  const { titulo: nombre, artista: grupo, imagen, spotify } = canciones[cancion];
-  portada.src = imagen;
-  titulo.textContent = nombre;
-  artista.textContent = grupo;
-  contador.textContent = `${dosDigitos(cancion + 1)} / ${dosDigitos(canciones.length)}`;
-  contador.setAttribute('aria-label', `Canción ${cancion + 1} de ${canciones.length}`);
-  enlaceCancion.href = `https://open.spotify.com/track/${spotify}`;
-  reproductor.title = `${nombre} en Spotify`;
-  reproductor.src = `https://open.spotify.com/embed/track/${spotify}`;
-  actualizarGuardado();
-  aviso.textContent = `${nombre}, de ${grupo}.`;
-}
-
-guardar.addEventListener('click', () => marcarCancion(!guardadas.has(cancion)));
-escucha.querySelector('.siguiente-cancion').addEventListener('click', pasarCancion);
-
-tarjeta.addEventListener('pointerdown', evento => {
-  if (!evento.isPrimary || evento.button !== 0 || evento.target.closest('a, iframe')) return;
-  gesto = { id: evento.pointerId, x: evento.clientX, y: evento.clientY };
-  tarjeta.setPointerCapture(gesto.id);
-});
-
-tarjeta.addEventListener('pointermove', evento => {
-  if (gesto?.id !== evento.pointerId) return;
-  const x = evento.clientX - gesto.x;
-  const y = evento.clientY - gesto.y;
-  if (Math.abs(x) > Math.abs(y)) {
-    tarjeta.style.setProperty('--arrastre', `${Math.sign(x) * limitar(Math.abs(x) * .24, 22)}px`);
+  try {
+    const ids = JSON.parse(localStorage.getItem(clave));
+    if (Array.isArray(ids)) guardadas = new Set(ids.filter(id => tarjetas.some(tarjeta => tarjeta.id === id)));
+  } catch {
+    // Las tarjetas se pueden seguir usando con el almacenamiento bloqueado.
   }
-});
 
-function terminarGesto(evento) {
-  if (gesto?.id !== evento.pointerId) return;
-  const x = evento.clientX - gesto.x;
-  const y = evento.clientY - gesto.y;
-  gesto = undefined;
-  tarjeta.style.removeProperty('--arrastre');
-  if (evento.type !== 'pointerup' || Math.abs(x) < 48 || Math.abs(x) < Math.abs(y) * 1.25) return;
-  if (x > 0) marcarCancion();
-  else pasarCancion();
+  function actualizarBoton() {
+    const guardada = guardadas.has(tarjetas[actual].id);
+    guardar.setAttribute('aria-pressed', String(guardada));
+    guardar.textContent = guardada ? marcada : accion;
+  }
+
+  function mostrar(indice) {
+    if (actual !== indice) {
+      actual = indice;
+      const datos = tarjetas[actual];
+      portada.src = datos.imagen;
+      titulo.textContent = datos.titulo;
+      subtitulo.textContent = datos.subtitulo;
+      contador.textContent = `${dosDigitos(actual + 1)} / ${dosDigitos(tarjetas.length)}`;
+      contador.setAttribute('aria-label', `${tipo} ${actual + 1} de ${tarjetas.length}`);
+      actualizarEnlace(enlace, datos);
+      actualizarBoton();
+    }
+    aviso.textContent = tarjetas[actual].titulo;
+  }
+
+  function actualizarColeccion() {
+    const guardadasVisibles = tarjetas.flatMap(({ id, titulo: nombre }, indice) => {
+      if (!guardadas.has(id)) return [];
+      const fila = document.createElement('li');
+      const boton = document.createElement('button');
+      boton.type = 'button';
+      boton.textContent = nombre;
+      boton.addEventListener('click', () => {
+        mostrar(indice);
+        guardar.focus();
+      });
+      fila.append(boton);
+      return [fila];
+    });
+    lista.replaceChildren(...guardadasVisibles);
+    resumen.textContent = `${nombreColeccion} (${guardadasVisibles.length})`;
+    coleccion.hidden = guardadasVisibles.length === 0;
+  }
+
+  function marcar(guardada) {
+    const { id, titulo: nombre } = tarjetas[actual];
+    if (guardada) guardadas.add(id);
+    else guardadas.delete(id);
+    try {
+      localStorage.setItem(clave, JSON.stringify([...guardadas]));
+    } catch {
+      // Se mantiene la selección durante la visita.
+    }
+    actualizarBoton();
+    actualizarColeccion();
+    return `«${nombre}» ${guardada ? confirmada : retirada}.`;
+  }
+
+  const pasar = () => mostrar((actual + 1) % tarjetas.length);
+  guardar.addEventListener('click', () => { aviso.textContent = marcar(!guardadas.has(tarjetas[actual].id)); });
+  escucha.querySelector('.siguiente-tarjeta').addEventListener('click', pasar);
+
+  tarjeta.addEventListener('pointerdown', evento => {
+    if (!evento.isPrimary || evento.button !== 0 || evento.target.closest('a')) return;
+    gesto = { id: evento.pointerId, x: evento.clientX, y: evento.clientY };
+    tarjeta.setPointerCapture(gesto.id);
+  });
+
+  tarjeta.addEventListener('pointermove', evento => {
+    if (gesto?.id !== evento.pointerId) return;
+    const x = evento.clientX - gesto.x;
+    const y = evento.clientY - gesto.y;
+    const arrastre = Math.abs(x) > Math.abs(y) ? Math.sign(x) * limitar(Math.abs(x) * .24, 22) : 0;
+    tarjeta.style.setProperty('--arrastre', `${arrastre}px`);
+  });
+
+  function terminarGesto(evento) {
+    if (gesto?.id !== evento.pointerId) return;
+    const x = evento.clientX - gesto.x;
+    const y = evento.clientY - gesto.y;
+    gesto = undefined;
+    tarjeta.style.removeProperty('--arrastre');
+    if (evento.type !== 'pointerup' || Math.abs(x) < 48 || Math.abs(x) < Math.abs(y) * 1.25) return;
+    const confirmacion = x > 0 ? marcar(true) : '';
+    pasar();
+    if (confirmacion) aviso.textContent = `${confirmacion} Ahora, ${tarjetas[actual].titulo}.`;
+  }
+
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(evento => {
+    tarjeta.addEventListener(evento, terminarGesto);
+  });
+  actualizarBoton();
+  actualizarColeccion();
+  return mostrar;
 }
 
-['pointerup', 'pointercancel', 'lostpointercapture'].forEach(evento => {
-  tarjeta.addEventListener(evento, terminarGesto);
+const reproductor = document.querySelector('#descubrir .reproductor');
+const mostrarCancion = prepararMazo(document.querySelector('#descubrir .escucha'), canciones.map(cancion => ({
+  ...cancion, id: cancion.spotify, subtitulo: cancion.artista,
+})), 'Canción', 'sinNombre.canciones', ['Guardar', 'Guardada', 'guardada', 'quitada de guardadas'],
+  (enlace, cancion) => {
+    enlace.href = urlSpotify(cancion);
+    reproductor.title = `${cancion.titulo} en Spotify`;
+    reproductor.src = embedSpotify(cancion);
+  });
+
+prepararMazo(document.querySelector('#artistas .escucha'), artistas, 'Artista', 'sinNombre.artistas',
+  ['Seguir', 'Siguiendo', 'añadido a tus artistas', 'eliminado de tus artistas'], (enlace, artista) => {
+    enlace.dataset.cancion = artista.tema.spotify;
+    enlace.textContent = `Escuchar «${artista.tema.titulo}»`;
+  });
+
+document.querySelector('#artistas .tarjeta-enlace').addEventListener('click', evento => {
+  if (evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) return;
+  const indice = canciones.findIndex(tema => tema.spotify === evento.currentTarget.dataset.cancion);
+  mostrarCancion(indice);
+  reproductor.focus({ preventScroll: true });
 });
+
+const animoActual = document.querySelector('#animo-actual');
+const animoDestino = document.querySelector('#animo-destino');
+const listaAnimo = document.querySelector('.cola-animo');
+const marcoSpotify = document.querySelector('.reproductor-animo');
+const enlaceAnimo = document.querySelector('.enlace-animo');
+const avisoAnimo = document.querySelector('.aviso-animo');
+let cola = [];
+let temaActivo = 0;
+let temaCargado;
+let controladorAnimo;
+let sonando = false;
+let reproducirAlCargar = false;
+
+function elegirTema(indice, escuchar) {
+  temaActivo = indice;
+  const tema = cola[indice];
+  [...listaAnimo.querySelectorAll('button')].forEach((boton, posicion) => {
+    if (posicion === indice) boton.setAttribute('aria-current', 'true');
+    else boton.removeAttribute('aria-current');
+  });
+  enlaceAnimo.href = urlSpotify(tema);
+  const iframe = marcoSpotify.querySelector('iframe');
+  iframe.title = `${tema.titulo} en Spotify`;
+
+  if (tema !== temaCargado) {
+    temaCargado = tema;
+    sonando = false;
+    reproducirAlCargar = Boolean(controladorAnimo && escuchar);
+    if (controladorAnimo) controladorAnimo.loadEntity(uriSpotify(tema));
+    else if (iframe.src !== embedSpotify(tema)) iframe.src = embedSpotify(tema);
+  }
+  if (escuchar && !sonando) controladorAnimo?.play();
+}
+
+function ajustarCola(evento) {
+  const estabaSonando = sonando || reproducirAlCargar;
+  const temaAnterior = cola[temaActivo];
+  const inicio = temasAnimo.findIndex(tema => tema.animo === animoActual.value);
+  const destino = temasAnimo.findIndex(tema => tema.animo === animoDestino.value);
+  cola = temasAnimo.slice(Math.min(inicio, destino), Math.max(inicio, destino) + 1);
+  if (inicio > destino) cola.reverse();
+
+  listaAnimo.replaceChildren(...cola.map((tema, indice) => {
+    const fila = document.createElement('li');
+    const boton = document.createElement('button');
+    const estado = document.createElement('span');
+    const animo = [...animoActual.options].find(opcion => opcion.value === tema.animo).textContent;
+    boton.type = 'button';
+    boton.textContent = tema.titulo;
+    estado.textContent = animo;
+    boton.append(estado);
+    boton.addEventListener('click', () => elegirTema(indice, true));
+    fila.append(boton);
+    return fila;
+  }));
+
+  const continuar = estabaSonando && evento?.target === animoDestino;
+  elegirTema(continuar ? Math.max(0, cola.indexOf(temaAnterior)) : 0, estabaSonando);
+  avisoAnimo.textContent = `${cola.length} ${cola.length === 1 ? 'tema' : 'temas'} en la lista.`;
+}
+
+animoActual.addEventListener('change', ajustarCola);
+animoDestino.addEventListener('change', ajustarCola);
+ajustarCola();
+
+window.onSpotifyIframeApiReady = api => {
+  api.createController(marcoSpotify.querySelector('iframe'), { uri: uriSpotify(temaCargado), height: 152 }, controlador => {
+    controladorAnimo = controlador;
+    marcoSpotify.querySelector('iframe').title = `${temaCargado.titulo} en Spotify`;
+    controlador.addListener('ready', () => {
+      if (!reproducirAlCargar) return;
+      reproducirAlCargar = false;
+      controlador.play();
+    });
+    controlador.addListener('playback_update', ({ data }) => {
+      const { playingURI, isPaused, isBuffering, position, duration } = data;
+      if (playingURI && playingURI !== uriSpotify(temaCargado)) return;
+      const final = !isBuffering && duration > 0 && position >= duration && (sonando || !isPaused);
+      sonando = !isPaused && !final;
+      if (sonando) reproducirAlCargar = false;
+      if (!final) return;
+      if (temaActivo + 1 < cola.length) elegirTema(temaActivo + 1, true);
+      else avisoAnimo.textContent = 'Has llegado al final de la lista.';
+    });
+  });
+};
+
+const apiSpotify = document.createElement('script');
+apiSpotify.src = 'https://open.spotify.com/embed/iframe-api/v1';
+apiSpotify.async = true;
+document.head.append(apiSpotify);

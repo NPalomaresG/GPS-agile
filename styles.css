@@ -86,7 +86,7 @@ h1, h2, h3, h4, .marca { font-family: var(--titulos); font-weight: 800; }
   object-fit: contain;
 }
 
-.navegacion { display: flex; gap: clamp(1rem, 3.2vw, 3.5rem); }
+.navegacion { display: flex; flex-wrap: wrap; justify-content: end; gap: .1rem clamp(.75rem, 2vw, 2.25rem); }
 .navegacion a {
   padding-block: .5rem;
   font-size: .92rem;
@@ -220,7 +220,8 @@ h1 span { color: var(--acento); }
 .capitulo:not(.en-directo) .introduccion > p:last-child { color: var(--texto); }
 
 .descubrir, .en-comun, .equipo { background: var(--panel); }
-.descubrir .capitulo-interior, .en-comun .capitulo-interior {
+.descubrir .capitulo-interior, .artistas .capitulo-interior, .animo .capitulo-interior,
+.en-comun .capitulo-interior {
   grid-template-columns: minmax(0, .95fr) minmax(0, 1.2fr);
   align-items: center;
 }
@@ -236,17 +237,6 @@ h1 span { color: var(--acento); }
   --margen-mazo: clamp(1.5rem, 4vw, 4.3rem);
   min-width: 0;
 }
-.ranking {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: .55rem 1rem;
-  margin-bottom: 1rem;
-}
-.ranking a { text-decoration: none; }
-.ranking a:hover { background: var(--noche); }
-.ranking time { font-size: .9rem; }
-
 .etiqueta-demo {
   display: inline-block;
   width: max-content;
@@ -270,7 +260,7 @@ h1 span { color: var(--acento); }
   content: "";
 }
 
-.cancion {
+.tarjeta-deslizante {
   position: relative;
   display: grid;
   grid-template-columns: min(51%, 18.75rem) minmax(0, 1fr);
@@ -282,9 +272,9 @@ h1 span { color: var(--acento); }
   transform: translateX(var(--arrastre, 0px));
 }
 
-.cancion:active { cursor: grabbing; }
-.cancion-portada { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
-.cancion-ficha {
+.tarjeta-deslizante:active { cursor: grabbing; }
+.tarjeta-portada { width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; }
+.tarjeta-ficha {
   display: grid;
   align-content: space-between;
   gap: .65rem;
@@ -293,10 +283,10 @@ h1 span { color: var(--acento); }
   padding: clamp(.65rem, 2vw, 1.7rem);
 }
 
-.cancion-numero { font-size: .72rem; font-weight: 700; letter-spacing: .12em; }
-.cancion-ficha h3 { font-size: clamp(1.6rem, 3.45vw, 3.7rem); line-height: .95; overflow-wrap: anywhere; }
-.cancion-artista { margin-top: .25rem; color: var(--texto); font-weight: 600; line-height: 1.2; }
-.cancion-enlace { justify-self: start; font-size: .875rem; font-weight: 700; text-underline-offset: .2em; }
+.tarjeta-numero { font-size: .72rem; font-weight: 700; letter-spacing: .12em; }
+.tarjeta-ficha h3 { font-size: clamp(1.6rem, 3.45vw, 3.7rem); line-height: .95; overflow-wrap: anywhere; }
+.tarjeta-subtitulo { margin-top: .35rem; color: var(--texto); font-weight: 600; line-height: 1.25; }
+.tarjeta-enlace { justify-self: start; font-size: .875rem; font-weight: 700; text-underline-offset: .2em; }
 
 .reproductor {
   display: block;
@@ -320,11 +310,73 @@ progress::-webkit-progress-bar { background: var(--linea); }
 progress::-webkit-progress-value { background: var(--claro); }
 progress::-moz-progress-bar { background: var(--claro); }
 
-.acciones-cancion { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .95rem; }
+.acciones-mazo { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .95rem; }
 .guardar[aria-pressed="true"] { background: var(--claro); color: var(--noche); }
 .guardar[aria-pressed="true"]:focus-visible { outline-color: var(--claro); }
-.aviso-cancion { color: var(--texto); font-size: .84rem; }
+.aviso-mazo { color: var(--texto); font-size: .84rem; }
 .gestos { margin-top: .6rem; color: var(--texto); font-size: .8rem; }
+.guardados { margin-top: .65rem; font-size: .85rem; }
+.guardados summary { width: fit-content; font-weight: 750; cursor: pointer; }
+.guardados ul { display: flex; flex-wrap: wrap; gap: .25rem .85rem; padding: .35rem 0 0; list-style: none; }
+.guardados button {
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: .19em;
+  cursor: pointer;
+}
+
+.artistas { background: color-mix(in srgb, #594463 38%, var(--noche)); }
+.animo { background: color-mix(in srgb, var(--acento) 28%, var(--noche)); }
+
+.sesion {
+  min-width: 0;
+  padding: clamp(.9rem, 2vw, 1.55rem);
+  border: 1px solid var(--linea);
+  background: var(--noche);
+}
+.estados { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-bottom: 1rem; }
+.estados label { display: grid; align-content: start; gap: .26rem; font-size: .82rem; font-weight: 750; }
+.estados select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding-inline: .55rem;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: var(--panel);
+  color: var(--texto);
+  color-scheme: dark;
+  font: inherit;
+  font-size: .95rem;
+}
+.sesion h3 { margin-bottom: .45rem; font-size: clamp(1.55rem, 2.4vw, 2.15rem); line-height: 1; }
+.cola-animo { display: grid; gap: .25rem; padding: 0; list-style: none; }
+.cola-animo button {
+  display: flex;
+  width: 100%;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+  padding: .3rem .65rem;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: transparent;
+  font-size: .9rem;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+.cola-animo button:hover { border-color: var(--claro); }
+.cola-animo button[aria-current="true"] { border-color: var(--claro); background: var(--panel); }
+.cola-animo button span { flex: none; font-size: .75rem; font-weight: 650; }
+
+.reproductor-animo { width: 100%; overflow: hidden; }
+.reproductor-animo iframe { display: block; width: 100%; height: 152px; border: 0; }
+.enlace-animo { display: inline-block; margin-top: .45rem; }
+.aviso-animo { margin-top: .35rem; color: var(--texto); font-size: .82rem; }
 
 .en-comun { background: color-mix(in srgb, var(--panel) 58%, var(--noche)); }
 .mezcla {
@@ -384,6 +436,7 @@ progress::-moz-progress-bar { background: var(--claro); }
   line-height: 1.15;
 }
 .mezcla-lista strong { display: block; font-size: .95rem; }
+.mezcla-lista a { text-underline-offset: .2em; }
 .mezcla-lista small { display: block; margin-top: .2rem; color: var(--claro); font-size: .79rem; }
 .origen, .origen-evento { font-size: .72rem; font-weight: 750; white-space: nowrap; }
 .origen { padding: .18rem .32rem; border-bottom: 1px solid currentColor; }
@@ -572,7 +625,8 @@ progress::-moz-progress-bar { background: var(--claro); }
   .corte-escritorio { display: none; }
   .entradilla { max-width: 27rem; }
   .capitulo-interior { padding-block: 2.55rem 2.1rem; }
-  .descubrir .capitulo-interior, .en-comun .capitulo-interior, .en-directo .capitulo-interior, .equipo .capitulo-interior {
+  .descubrir .capitulo-interior, .artistas .capitulo-interior, .animo .capitulo-interior,
+  .en-comun .capitulo-interior, .en-directo .capitulo-interior, .equipo .capitulo-interior {
     grid-template-columns: minmax(0, 1fr);
   }
   .en-directo .capitulo-interior { grid-template-areas: "titular" "foto" "agenda"; }
@@ -581,7 +635,7 @@ progress::-moz-progress-bar { background: var(--claro); }
   .equipo .introduccion h2 { font-size: clamp(2.9rem, 9vw, 4.5rem); }
   .introduccion > p:last-child { font-size: 1rem; }
   .foto-concierto { min-height: 0; max-height: none; height: auto; aspect-ratio: 1.6; }
-  .cancion-ficha h3 { font-size: clamp(1.65rem, 6vw, 2.65rem); }
+  .tarjeta-ficha h3 { font-size: clamp(1.65rem, 6vw, 2.65rem); }
   .mezcla-portada { min-height: 17rem; }
   .mezcla-nombres { font-size: clamp(2.3rem, 8.7vw, 4.3rem); }
   .mezcla-cabecera, .agenda-cabecera, .archivo-cabecera, .mercado-cabecera { column-gap: .5rem; }
@@ -599,8 +653,8 @@ progress::-moz-progress-bar { background: var(--claro); }
 @media (max-width: 35rem) {
   .cabecera-interior { flex-wrap: wrap; gap: .65rem; padding-top: .95rem; padding-bottom: .45rem; }
   .cabecera .marca { font-size: 1.95rem; }
-  .navegacion { justify-content: space-between; width: 100%; gap: .3rem; }
-  .navegacion a { font-size: .83rem; }
+  .navegacion { justify-content: flex-start; width: 100%; gap: .1rem .85rem; }
+  .navegacion a { padding-block: .32rem; font-size: .83rem; }
   .escena { flex-direction: column; gap: .15rem; }
   .escena-numero { font-size: .65rem; }
   .escena-nombre { font-size: 1.18rem; }
@@ -616,9 +670,11 @@ progress::-moz-progress-bar { background: var(--claro); }
   .mezcla-cabecera h3 { font-size: 1.3rem; }
   .agenda ul > li { grid-template-columns: 3.35rem minmax(0, 1fr); column-gap: .55rem; }
   .origen-evento { grid-column: 2; }
-  .cancion-ficha { padding: .55rem; }
+  .escucha { --margen-mazo: .4rem; }
+  .reproductor-animo { width: calc(100% + 1.5rem); margin-inline: -.75rem; }
+  .tarjeta-ficha { padding: .55rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cancion { transform: none; }
+  .tarjeta-deslizante { transform: none; }
 }

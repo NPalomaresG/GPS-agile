@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#071b2b">
   <meta name="description" content="'SinNombre' es una plataforma para descubrir música, compartirla con amigos, encontrar conciertos y explorar equipo de segunda mano.">
   <title>'SinNombre' · Descubre lo que te mueve. Hazlo sonar.</title>
-  <link rel="stylesheet" href="styles.css?v=top4-2">
-  <script src="script.js?v=top4" defer></script>
+  <link rel="stylesheet" href="styles.css?v=spotify">
+  <script src="script.js?v=spotify" defer></script>
 </head>
 <body>
   <header class="cabecera" id="inicio">
@@ -15,6 +15,8 @@
       <a class="marca" href="#inicio"><img class="marca-logo" src="recursos/logo.png" width="240" height="100" alt="">'SinNombre'</a>
       <nav class="navegacion" aria-label="Capítulos">
         <a href="#descubrir">Descubrir</a>
+        <a href="#artistas">Artistas</a>
+        <a href="#animo">Tu ánimo</a>
         <a href="#en-comun">En común</a>
         <a href="#en-directo">En directo</a>
         <a href="#equipo">Equipo</a>
@@ -42,36 +44,108 @@
               <div class="introduccion">
                 <p class="ceja"><span aria-hidden="true"></span> Descubrir</p>
                 <h2 id="titulo-descubrir">Escucha un poco.<br>Encuentra algo nuevo.</h2>
-                <p>Escucha las cuatro primeras canciones del ranking global de Spotify y guarda las que más te gusten.</p>
+                <p>Prueba las canciones en el reproductor de Spotify y guarda las que más te gusten.</p>
               </div>
               <div class="escucha">
-                <div class="ranking">
-                  <a class="etiqueta-demo" href="https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF">Top 4 global</a>
-                  <time datetime="2026-09-29">29 de septiembre de 2026</time>
-                </div>
                 <div class="mazo">
-                  <article class="cancion" aria-labelledby="cancion-titulo">
-                    <img class="cancion-portada" src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221deb742375f88edfb2e7368"
+                  <article class="tarjeta-deslizante" aria-labelledby="cancion-titulo">
+                    <img class="tarjeta-portada" src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221deb742375f88edfb2e7368"
                       width="300" height="300" alt="" draggable="false">
-                    <div class="cancion-ficha">
-                      <span class="cancion-numero" aria-label="Canción 1 de 4">01 / 04</span>
+                    <div class="tarjeta-ficha">
+                      <span class="tarjeta-numero" aria-label="Canción 1 de 7">01 / 07</span>
                       <div>
                         <h3 id="cancion-titulo">BbY WOW</h3>
-                        <p class="cancion-artista">KAROL G, Judeline y rusowsky</p>
+                        <p class="tarjeta-subtitulo">KAROL G, Judeline y rusowsky</p>
                       </div>
-                      <a class="cancion-enlace" href="https://open.spotify.com/track/3h5T5JypYU7huFiVYhv1dr">Abrir en Spotify</a>
+                      <a class="tarjeta-enlace" href="https://open.spotify.com/track/3h5T5JypYU7huFiVYhv1dr">Abrir en Spotify</a>
                     </div>
                   </article>
                 </div>
                 <iframe class="reproductor" src="https://open.spotify.com/embed/track/3h5T5JypYU7huFiVYhv1dr"
                   width="456" height="152" title="BbY WOW en Spotify" loading="lazy"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-                <div class="acciones-cancion">
+                <div class="acciones-mazo">
                   <button class="boton guardar" type="button" aria-pressed="false">Guardar</button>
-                  <button class="boton siguiente-cancion" type="button">Siguiente</button>
-                  <span class="aviso-cancion" role="status"></span>
+                  <button class="boton siguiente-tarjeta" type="button">Siguiente canción</button>
+                  <span class="aviso-mazo" role="status"></span>
                 </div>
-                <p class="gestos">Desliza la portada ← para pasar o → para guardar.</p>
+                <p class="gestos">Desliza la tarjeta ← para pasar o → para guardar y pasar.</p>
+                <details class="guardados" hidden>
+                  <summary>Canciones guardadas</summary>
+                  <ul></ul>
+                </details>
+              </div>
+            </div>
+          </section>
+
+          <section class="capitulo artistas" id="artistas" aria-labelledby="titulo-artistas">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> Artistas</p>
+                <h2 id="titulo-artistas">Escucha a quien<br>está detrás.</h2>
+                <p>Descubre a sus artistas, escucha uno de sus temas y sigue a quien quieras volver a escuchar.</p>
+              </div>
+              <div class="escucha">
+                <div class="mazo">
+                  <article class="tarjeta-deslizante" aria-labelledby="artista-nombre">
+                    <img class="tarjeta-portada" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e6065f209e0a01986206bd53" width="300" height="300" alt="" draggable="false">
+                    <div class="tarjeta-ficha">
+                      <span class="tarjeta-numero" aria-label="Artista 1 de 3">01 / 03</span>
+                      <div>
+                        <h3 id="artista-nombre">Gigi Perez</h3>
+                        <p class="tarjeta-subtitulo">Indie folk · Guitarra acústica y voz íntima.</p>
+                      </div>
+                      <a class="tarjeta-enlace" href="#descubrir" data-cancion="2262bWmqomIaJXwCRHr13j">Escuchar «Sailor Song»</a>
+                    </div>
+                  </article>
+                </div>
+                <div class="acciones-mazo">
+                  <button class="boton guardar" type="button" aria-pressed="false">Seguir</button>
+                  <button class="boton siguiente-tarjeta" type="button">Siguiente artista</button>
+                  <span class="aviso-mazo" role="status"></span>
+                </div>
+                <p class="gestos">Desliza la tarjeta ← para pasar o → para seguir y pasar.</p>
+                <details class="guardados" hidden>
+                  <summary>Artistas que sigues</summary>
+                  <ul></ul>
+                </details>
+              </div>
+            </div>
+          </section>
+
+          <section class="capitulo animo" id="animo" aria-labelledby="titulo-animo">
+            <div class="capitulo-interior">
+              <div class="introduccion">
+                <p class="ceja"><span aria-hidden="true"></span> Tu ánimo</p>
+                <h2 id="titulo-animo">Cambia el ánimo.<br>Cambia la música.</h2>
+                <p>Elige cómo te sientes y adónde quieres llegar. Los temas se encadenan en orden y la lista se ajusta si cambias de ánimo mientras escuchas.</p>
+              </div>
+              <div class="sesion">
+                <div class="estados">
+                  <label>Ánimo actual
+                    <select id="animo-actual">
+                      <option value="calma">Calma</option>
+                      <option value="impulso">Impulso</option>
+                      <option value="energia">Energía</option>
+                    </select>
+                  </label>
+                  <label>Ánimo que buscas
+                    <select id="animo-destino">
+                      <option value="calma">Calma</option>
+                      <option value="impulso">Impulso</option>
+                      <option value="energia" selected>Energía</option>
+                    </select>
+                  </label>
+                </div>
+                <h3 id="titulo-cola">Tu lista de ánimo</h3>
+                <ol class="cola-animo" aria-labelledby="titulo-cola"></ol>
+                <div class="reproductor reproductor-animo">
+                  <iframe src="https://open.spotify.com/embed/track/2262bWmqomIaJXwCRHr13j"
+                    width="456" height="152" title="Sailor Song en Spotify" loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                </div>
+                <a class="tarjeta-enlace enlace-animo" href="https://open.spotify.com/track/2262bWmqomIaJXwCRHr13j">Abrir en Spotify</a>
+                <p class="aviso-animo" role="status"></p>
               </div>
             </div>
           </section>
@@ -95,10 +169,10 @@
                     <span class="etiqueta-demo">Demo</span>
                   </div>
                   <ol>
-                    <li><span><strong>Sailor Song</strong><small>Gigi Perez</small></span><span class="origen noa">Noa</span></li>
-                    <li><span><strong>Sesi Potret</strong><small>eńau, Ari Lesmana</small></span><span class="origen dani">Dani</span></li>
-                    <li><span><strong>Risk It All</strong><small>Bruno Mars</small></span><span class="origen noa">Noa</span></li>
-                    <li><span><strong>Self Aware</strong><small>Temper City</small></span><span class="origen dani">Dani</span></li>
+                    <li><span><strong><a href="https://open.spotify.com/track/2262bWmqomIaJXwCRHr13j">Sailor Song</a></strong><small>Gigi Perez</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong><a href="https://open.spotify.com/track/4xoY4lZNoTjEuHsSmhgF1G">Sesi Potret</a></strong><small>eńau, Ari Lesmana</small></span><span class="origen dani">Dani</span></li>
+                    <li><span><strong><a href="https://open.spotify.com/track/5y2ijHECwFYWqcAHKTZgzD">Risk It All</a></strong><small>Bruno Mars</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong><a href="https://open.spotify.com/track/4qW3BbQAwZsrnu8a3ZRdyT">Self Aware</a></strong><small>Temper City</small></span><span class="origen dani">Dani</span></li>
                   </ol>
                 </figcaption>
               </figure>
@@ -110,7 +184,7 @@
               <div class="introduccion">
                 <p class="ceja"><span aria-hidden="true"></span> En directo</p>
                 <h2 id="titulo-en-directo">De la playlist<br>a la sala.</h2>
-                <p>Si descubriste a Las Horas Rojas, mira cuándo puedes verlas en directo. Tus escuchas también pueden llevarte a un festival.</p>
+                <p>Descubre conciertos y festivales a partir de lo que escuchas.</p>
               </div>
               <img class="foto-concierto" src="recursos/en-directo.webp" width="1080" height="720"
                 alt="Público con las manos en alto frente a un escenario pequeño iluminado en ámbar">
@@ -199,9 +273,9 @@
         </div>
 
         <div class="mandos" hidden>
-          <progress class="progreso-recorrido" max="4" value="1" aria-label="Progreso del recorrido"></progress>
+          <progress class="progreso-recorrido" max="6" value="1" aria-label="Progreso del recorrido"></progress>
           <div class="mandos-interior">
-            <div class="escena" role="status" aria-atomic="true"><span class="escena-numero">01 / 04</span><span class="escena-nombre">Descubrir</span></div>
+            <div class="escena" role="status" aria-atomic="true"><span class="escena-numero">01 / 06</span><span class="escena-nombre">Descubrir</span></div>
             <div class="mandos-botones">
               <button class="boton anterior-capitulo" type="button" aria-label="Anterior capítulo" aria-disabled="true">Anterior</button>
               <button class="boton siguiente-capitulo" type="button" aria-label="Siguiente capítulo">Siguiente</button>
