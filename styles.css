@@ -79,24 +79,11 @@ h1, h2, h3, h4, .marca { font-family: var(--titulos); font-weight: 800; }
   white-space: nowrap;
 }
 
-.disco {
-  display: grid;
-  width: .69em;
-  aspect-ratio: 1;
-  border: .052em solid currentColor;
-  border-radius: 50%;
-  place-items: center;
-  transform: rotate(-32deg);
-}
-
-.disco::before {
-  content: "";
-  width: 64%;
-  aspect-ratio: 1;
-  border: .045em solid currentColor;
-  border-inline-color: transparent;
-  border-radius: 50%;
-  background: radial-gradient(circle, currentColor 0 18%, transparent 22%);
+.marca-logo {
+  flex: none;
+  width: clamp(2.5rem, 1.2em, 5rem);
+  height: .78em;
+  object-fit: contain;
 }
 
 .navegacion { display: flex; gap: clamp(1rem, 3.2vw, 3.5rem); }
@@ -655,6 +642,8 @@ progress::-moz-progress-bar { background: var(--claro); }
   .escena-numero { font-size: .65rem; }
   .escena-nombre { font-size: 1.18rem; }
   .mandos .boton { padding-inline: .68rem; font-size: .82rem; }
+  .cierre-interior { grid-template-columns: 1fr; }
+  .cierre .marca { font-size: clamp(2.75rem, 10vw, 3.7rem); }
 }
 
 @media (max-width: 23rem) {
