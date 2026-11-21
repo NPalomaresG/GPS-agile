@@ -232,14 +232,20 @@ h1 span { color: var(--acento); }
   .en-comun .introduccion { grid-area: 1 / 2; }
 }
 
-.escucha { min-width: 0; }
-.ambientes {
+.escucha {
+  --margen-mazo: clamp(1.5rem, 4vw, 4.3rem);
+  min-width: 0;
+}
+.ranking {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: .55rem 1rem;
   margin-bottom: 1rem;
 }
+.ranking a { text-decoration: none; }
+.ranking a:hover { background: var(--noche); }
+.ranking time { font-size: .9rem; }
 
 .etiqueta-demo {
   display: inline-block;
@@ -254,41 +260,20 @@ h1 span { color: var(--acento); }
   text-transform: uppercase;
 }
 
-.secuencia {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .3rem .55rem;
-  padding: 0;
-  color: var(--claro);
-  font-size: .9rem;
-  font-weight: 600;
-  list-style: none;
-}
-
-.secuencia [aria-current] {
-  color: var(--claro);
-  text-decoration: underline 2px var(--claro);
-  text-underline-offset: .3em;
-  font-weight: 800;
-}
-.secuencia li > span { display: inline-block; margin-right: .42rem; color: var(--claro); text-decoration: none; }
-
-.mazo { position: relative; padding-right: clamp(1.5rem, 4vw, 4.3rem); isolation: isolate; }
-.siguiente-portada {
+.mazo { position: relative; padding-right: var(--margen-mazo); isolation: isolate; }
+.mazo::before {
   position: absolute;
   z-index: -1;
   inset: 7% 0 7% 48%;
-  overflow: hidden;
   border: 1px solid var(--linea);
-  background: var(--noche);
+  background: color-mix(in srgb, var(--noche) 57%, var(--panel));
+  content: "";
 }
-.siguiente-portada img { width: 100%; height: 100%; opacity: .62; object-position: right center; }
 
 .cancion {
   position: relative;
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: min(51%, 18.75rem) minmax(0, 1fr);
   border: 1px solid var(--linea);
   background: var(--noche);
   cursor: grab;
@@ -298,7 +283,7 @@ h1 span { color: var(--acento); }
 }
 
 .cancion:active { cursor: grabbing; }
-.cancion-portada { width: 100%; height: 100%; min-width: 0; aspect-ratio: 1; }
+.cancion-portada { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .cancion-ficha {
   display: grid;
   align-content: space-between;
@@ -311,38 +296,16 @@ h1 span { color: var(--acento); }
 .cancion-numero { font-size: .72rem; font-weight: 700; letter-spacing: .12em; }
 .cancion-ficha h3 { font-size: clamp(1.6rem, 3.45vw, 3.7rem); line-height: .95; overflow-wrap: anywhere; }
 .cancion-artista { margin-top: .25rem; color: var(--texto); font-weight: 600; line-height: 1.2; }
+.cancion-enlace { justify-self: start; font-size: .875rem; font-weight: 700; text-underline-offset: .2em; }
 
-.reproductor { display: flex; align-items: center; gap: .65rem; }
-.reproducir {
-  display: grid;
-  width: 2.65rem;
-  height: 2.65rem;
-  flex: none;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--claro);
-  border-radius: 50%;
-  background: var(--claro);
-  color: var(--noche);
-  cursor: pointer;
-}
-.reproducir:hover { background: var(--texto); }
-.reproducir:focus-visible { outline-color: var(--claro); }
-.reproducir > span {
-  margin-left: .14rem;
-  border-block: .37rem solid transparent;
-  border-left: .6rem solid currentColor;
-}
-.reproducir[data-reproduciendo] > span {
-  width: .62rem;
-  height: .8rem;
-  margin: 0;
+.reproductor {
+  display: block;
+  width: calc(100% - var(--margen-mazo));
+  margin-top: .85rem;
   border: 0;
-  border-inline: .19rem solid currentColor;
+  border-radius: .75rem;
 }
 
-.fragmento { display: grid; gap: .35rem; width: 100%; }
-.tiempo { font-size: .68rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
 progress {
   appearance: none;
   display: block;
@@ -654,7 +617,6 @@ progress::-moz-progress-bar { background: var(--claro); }
   .agenda ul > li { grid-template-columns: 3.35rem minmax(0, 1fr); column-gap: .55rem; }
   .origen-evento { grid-column: 2; }
   .cancion-ficha { padding: .55rem; }
-  .reproductor { gap: .45rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

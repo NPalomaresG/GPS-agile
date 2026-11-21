@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#071b2b">
   <meta name="description" content="'SinNombre' es una plataforma para descubrir música, compartirla con amigos, encontrar conciertos y explorar equipo de segunda mano.">
   <title>'SinNombre' · Descubre lo que te mueve. Hazlo sonar.</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=top4-2">
+  <script src="script.js?v=top4" defer></script>
 </head>
 <body>
   <header class="cabecera" id="inicio">
@@ -42,49 +42,36 @@
               <div class="introduccion">
                 <p class="ceja"><span aria-hidden="true"></span> Descubrir</p>
                 <h2 id="titulo-descubrir">Escucha un poco.<br>Encuentra algo nuevo.</h2>
-                <p>Prueba canciones en unos segundos. Guarda las que te enganchen y sigue escuchando mientras la lista sube de intensidad.</p>
+                <p>Escucha las cuatro primeras canciones del ranking global de Spotify y guarda las que más te gusten.</p>
               </div>
               <div class="escucha">
-                <div class="ambientes">
-                  <span class="etiqueta-demo">Demo</span>
-                  <ol class="secuencia" aria-label="Evolución de la lista por ambiente">
-                    <li aria-current="step">Calma</li>
-                    <li><span aria-hidden="true">→</span> Impulso</li>
-                    <li><span aria-hidden="true">→</span> Energía</li>
-                  </ol>
+                <div class="ranking">
+                  <a class="etiqueta-demo" href="https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF">Top 4 global</a>
+                  <time datetime="2026-09-29">29 de septiembre de 2026</time>
                 </div>
                 <div class="mazo">
-                  <div class="siguiente-portada" aria-hidden="true">
-                    <img src="recursos/impulso.webp" width="640" height="640" alt="">
-                  </div>
                   <article class="cancion" aria-labelledby="cancion-titulo">
-                    <img class="cancion-portada" src="recursos/calma.webp" width="640" height="640" alt=""
-                      draggable="false">
+                    <img class="cancion-portada" src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221deb742375f88edfb2e7368"
+                      width="300" height="300" alt="" draggable="false">
                     <div class="cancion-ficha">
-                      <span class="cancion-numero" aria-label="Canción 1 de 3">01 / 03</span>
+                      <span class="cancion-numero" aria-label="Canción 1 de 4">01 / 04</span>
                       <div>
-                        <h3 id="cancion-titulo">Persianas</h3>
-                        <p class="cancion-artista">Marea Baja</p>
+                        <h3 id="cancion-titulo">BbY WOW</h3>
+                        <p class="cancion-artista">KAROL G, Judeline y rusowsky</p>
                       </div>
-                      <div class="reproductor">
-                        <button class="reproducir" type="button" aria-label="Reproducir Persianas">
-                          <span aria-hidden="true"></span>
-                        </button>
-                        <div class="fragmento">
-                          <progress max="16" value="0" aria-label="Avance del fragmento"></progress>
-                          <span class="tiempo" aria-hidden="true">0:00 / 0:16</span>
-                        </div>
-                      </div>
+                      <a class="cancion-enlace" href="https://open.spotify.com/track/3h5T5JypYU7huFiVYhv1dr">Abrir en Spotify</a>
                     </div>
                   </article>
                 </div>
+                <iframe class="reproductor" src="https://open.spotify.com/embed/track/3h5T5JypYU7huFiVYhv1dr"
+                  width="456" height="152" title="BbY WOW en Spotify" loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
                 <div class="acciones-cancion">
                   <button class="boton guardar" type="button" aria-pressed="false">Guardar</button>
                   <button class="boton siguiente-cancion" type="button">Siguiente</button>
                   <span class="aviso-cancion" role="status"></span>
                 </div>
                 <p class="gestos">Desliza la portada ← para pasar o → para guardar.</p>
-                <audio src="recursos/persianas.mp3" preload="none"></audio>
               </div>
             </div>
           </section>
@@ -108,10 +95,10 @@
                     <span class="etiqueta-demo">Demo</span>
                   </div>
                   <ol>
-                    <li><span><strong>Persianas</strong><small>Marea Baja</small></span><span class="origen noa">Noa</span></li>
-                    <li><span><strong>Cable a tierra</strong><small>Voltaje Sur</small></span><span class="origen dani">Dani</span></li>
-                    <li><span><strong>Frecuencia gris</strong><small>Las Horas Rojas</small></span><span class="origen noa">Noa</span></li>
-                    <li><span><strong>Órbita corta</strong><small>Patio Polar</small></span><span class="origen dani">Dani</span></li>
+                    <li><span><strong>Sailor Song</strong><small>Gigi Perez</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong>Sesi Potret</strong><small>eńau, Ari Lesmana</small></span><span class="origen dani">Dani</span></li>
+                    <li><span><strong>Risk It All</strong><small>Bruno Mars</small></span><span class="origen noa">Noa</span></li>
+                    <li><span><strong>Self Aware</strong><small>Temper City</small></span><span class="origen dani">Dani</span></li>
                   </ol>
                 </figcaption>
               </figure>

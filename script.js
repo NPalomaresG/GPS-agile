@@ -151,24 +151,41 @@ const observarAltura = new ResizeObserver(() => {
 capitulos.forEach(capitulo => observarAltura.observe(capitulo));
 
 const canciones = [
-  { titulo: 'Persianas', artista: 'Marea Baja', imagen: 'calma', audio: 'persianas' },
-  { titulo: 'Frecuencia gris', artista: 'Las Horas Rojas', imagen: 'impulso', audio: 'frecuencia-gris' },
-  { titulo: 'Cable a tierra', artista: 'Voltaje Sur', imagen: 'energia', audio: 'cable-a-tierra' },
+  {
+    titulo: 'BbY WOW',
+    artista: 'KAROL G, Judeline y rusowsky',
+    spotify: '3h5T5JypYU7huFiVYhv1dr',
+    imagen: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221deb742375f88edfb2e7368',
+  },
+  {
+    titulo: 'Patient Zero',
+    artista: 'Taylor Swift',
+    spotify: '11hcBLPtbMp4aQI6zGQLub',
+    imagen: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cf3de6b538d8b1ed73a4d5d1',
+  },
+  {
+    titulo: 'Nicole Kidman',
+    artista: 'ADÉLA',
+    spotify: '70cHKK8bHAfJrOGVnfRG9J',
+    imagen: 'https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ac9d5d5263e9f03802d6864c',
+  },
+  {
+    titulo: 'Earrings',
+    artista: 'Malcolm Todd',
+    spotify: '0eAuGrXyGFYwur9ARUe7LJ',
+    imagen: 'https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022c1f34ecc1929fb59908aad1',
+  },
 ];
 const escucha = document.querySelector('.escucha');
 const tarjeta = escucha.querySelector('.cancion');
-const audio = escucha.querySelector('audio');
-const reproducir = escucha.querySelector('.reproducir');
+const reproductor = escucha.querySelector('.reproductor');
+const enlaceCancion = escucha.querySelector('.cancion-enlace');
 const guardar = escucha.querySelector('.guardar');
 const aviso = escucha.querySelector('.aviso-cancion');
 const portada = escucha.querySelector('.cancion-portada');
-const portadaSiguiente = escucha.querySelector('.siguiente-portada img');
 const titulo = escucha.querySelector('#cancion-titulo');
 const artista = escucha.querySelector('.cancion-artista');
 const contador = escucha.querySelector('.cancion-numero');
-const ambientes = [...escucha.querySelectorAll('.secuencia li')];
-const progresoAudio = escucha.querySelector('.fragmento progress');
-const tiempo = escucha.querySelector('.tiempo');
 const guardadas = new Set();
 let cancion = 0;
 let gesto;
@@ -186,60 +203,26 @@ function marcarCancion(guardada = true) {
   aviso.textContent = `«${canciones[cancion].titulo}» ${guardada ? 'guardada' : 'quitada de guardadas'}.`;
 }
 
-function actualizarReproductor() {
-  const sonando = !audio.paused && !audio.ended;
-  reproducir.toggleAttribute('data-reproduciendo', sonando);
-  reproducir.setAttribute('aria-label', `${sonando ? 'Pausar' : 'Reproducir'} ${canciones[cancion].titulo}`);
-  const duracion = Number.isFinite(audio.duration) ? Math.round(audio.duration) : 16;
-  progresoAudio.max = duracion;
-  progresoAudio.value = audio.currentTime;
-  tiempo.textContent = `0:${dosDigitos(Math.floor(audio.currentTime))} / 0:${dosDigitos(duracion)}`;
-}
-
 function pasarCancion() {
-  audio.pause();
   cancion = (cancion + 1) % canciones.length;
-  const { titulo: nombre, artista: grupo, imagen, audio: fragmento } = canciones[cancion];
-  const proxima = canciones[(cancion + 1) % canciones.length];
-  portada.src = `recursos/${imagen}.webp`;
-  portadaSiguiente.src = `recursos/${proxima.imagen}.webp`;
+  const { titulo: nombre, artista: grupo, imagen, spotify } = canciones[cancion];
+  portada.src = imagen;
   titulo.textContent = nombre;
   artista.textContent = grupo;
   contador.textContent = `${dosDigitos(cancion + 1)} / ${dosDigitos(canciones.length)}`;
   contador.setAttribute('aria-label', `Canción ${cancion + 1} de ${canciones.length}`);
-  ambientes.forEach((item, indice) => {
-    if (indice === cancion) item.setAttribute('aria-current', 'step');
-    else item.removeAttribute('aria-current');
-  });
-  audio.src = `recursos/${fragmento}.mp3`;
-  actualizarReproductor();
+  enlaceCancion.href = `https://open.spotify.com/track/${spotify}`;
+  reproductor.title = `${nombre} en Spotify`;
+  reproductor.src = `https://open.spotify.com/embed/track/${spotify}`;
   actualizarGuardado();
   aviso.textContent = `${nombre}, de ${grupo}.`;
 }
 
-reproducir.addEventListener('click', async () => {
-  if (!audio.paused) {
-    audio.pause();
-    return;
-  }
-  const fuente = audio.src;
-  try {
-    await audio.play();
-  } catch (error) {
-    if (error.name !== 'AbortError' && fuente === audio.src) {
-      aviso.textContent = 'No se pudo reproducir el fragmento.';
-    }
-  }
-});
-
-['play', 'pause', 'ended', 'timeupdate', 'loadedmetadata'].forEach(evento => {
-  audio.addEventListener(evento, actualizarReproductor);
-});
 guardar.addEventListener('click', () => marcarCancion(!guardadas.has(cancion)));
 escucha.querySelector('.siguiente-cancion').addEventListener('click', pasarCancion);
 
 tarjeta.addEventListener('pointerdown', evento => {
-  if (!evento.isPrimary || evento.button !== 0 || evento.target.closest('button')) return;
+  if (!evento.isPrimary || evento.button !== 0 || evento.target.closest('a, iframe')) return;
   gesto = { id: evento.pointerId, x: evento.clientX, y: evento.clientY };
   tarjeta.setPointerCapture(gesto.id);
 });
