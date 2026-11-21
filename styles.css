@@ -504,7 +504,7 @@ progress::-moz-progress-bar { background: var(--claro); }
 
 .mercado { grid-area: mercado; min-width: 0; }
 .mercado-cabecera { justify-content: flex-start; margin-bottom: .65rem; }
-.anuncios { display: grid; grid-template-columns: repeat(2, 1.15fr) .9fr; gap: .65rem; }
+.anuncios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; }
 .anuncio {
   display: grid;
   grid-template-columns: 36% minmax(0, 1fr);
@@ -639,9 +639,9 @@ progress::-moz-progress-bar { background: var(--claro); }
   .anuncios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .anuncio { grid-template: auto 1fr / minmax(0, 1fr); }
   .anuncio img { height: auto; min-height: 0; aspect-ratio: 1.7; }
-  .anuncio-merch { grid-column: 1 / -1; grid-template: auto / 26% minmax(0, 1fr); }
-  .anuncio-merch img { min-height: 5.9rem; aspect-ratio: 1.2; }
-  .anuncio-merch > div { align-self: center; }
+  .anuncio-destacado { grid-column: 1 / -1; grid-template: auto / 36% minmax(0, 1fr); }
+  .anuncio-destacado img { min-height: 5.9rem; aspect-ratio: 1.2; }
+  .anuncio-destacado > div { align-self: center; }
   .anuncio p { font-size: .8rem; }
   .vender { font-size: .85rem; }
 }
