@@ -82,7 +82,8 @@ h1, h2, h3, h4, .marca { font-family: var(--titulos); font-weight: 800; }
 .marca-logo {
   flex: none;
   width: clamp(2.5rem, 1.2em, 5rem);
-  height: .78em;
+  height: auto;
+  aspect-ratio: 1;
   object-fit: contain;
 }
 
@@ -553,7 +554,22 @@ progress::-moz-progress-bar { background: var(--claro); }
 
 .cierre { padding-block: clamp(3.6rem, 9vw, 8rem); }
 .cierre-interior { display: grid; grid-template-columns: minmax(0, 1fr) max-content; align-items: end; gap: 1.1rem; }
-.cierre .marca { font-size: clamp(3.7rem, 9vw, 9.75rem); }
+.cierre .marca {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  row-gap: clamp(.4rem, .65vw, .65rem);
+  max-width: 100%;
+  font-size: clamp(3.7rem, 9vw, 9.75rem);
+  text-align: center;
+}
+.cierre .marca-logo { grid-column: 1; grid-row: 1 / span 2; }
+.eslogan {
+  grid-column: 2;
+  font: 400 max(.65rem, .15em)/1.2 "Lucida Console", ui-monospace, Consolas, monospace;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+  white-space: normal;
+}
 .cierre p {
   grid-column: 1 / -1;
   padding-top: .85rem;
