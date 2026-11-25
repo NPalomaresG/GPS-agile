@@ -113,6 +113,7 @@ h1, h2, h3, h4, .marca { font-family: var(--titulos); font-weight: 800; }
   width: min(100%, 83rem);
   height: 100%;
   object-position: center 46%;
+  opacity: .67;
   filter: saturate(.65);
 }
 
