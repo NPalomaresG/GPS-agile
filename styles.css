@@ -104,6 +104,7 @@ h1, h2, h3, h4, .marca { font-family: var(--titulos); font-weight: 800; }
   isolation: isolate;
   overflow: hidden;
   border-bottom: 1px solid var(--linea);
+  
 }
 
 .foto-portada {
