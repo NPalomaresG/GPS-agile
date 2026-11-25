@@ -172,10 +172,10 @@ const temasAnimo = [
 
 const canciones = [
   {
-    titulo: 'BbY WOW',
-    artista: 'KAROL G, Judeline y rusowsky',
-    spotify: '3h5T5JypYU7huFiVYhv1dr',
-    imagen: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221deb742375f88edfb2e7368',
+    titulo: 'Stop The Wedding!',
+    artista: 'Ashe',
+    spotify: '3zOYmiNOuyDL0ClxJcEJ0T',
+    imagen: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020893a0c33fd4b8497b0ef2f6',
   },
   {
     titulo: 'Patient Zero',
